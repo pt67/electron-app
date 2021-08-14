@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mero Hisab | Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css"/>
+    <script src="./js/Chart-min.js"></script>
+    <script src="./js/utils.js"></script>
+</head>
+<body>
+   <div class="wrapper">
+    <aside>
+        <h1 id="d_title">Dashboard</h1>
+            <a href="dashboard.html" class="active">Statistic</a>
+            <a href="newitem.html">New Items</a>
+            <a href="sold.html">Sold Items</a>
+            <a href="stock.html">Stocks</a>
+            <a href="buyers.html">Buyers</a>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+    </aside>
+    <main>
+        <h1>Statistic</h1>
+
+        <div class="stat-boxes">
+            <div class="st-box">
+                <h2 id="nwitm">0</h2>
+                <p>New Items</p>
+            </div>
+            <div class="st-box">
+                <h2>50</h2>
+                <p>Sold Items</p>
+            </div>
+            <div class="st-box">
+                <h2>20</h2>
+                <p>Stock Items</p>
+            </div>
+            <div class="st-box">
+                <h2>300</h2>
+                <p>Buyers</p>
+            </div>
+        </div>
+        <h3>Current States</h3>
+        <div style="width:90%;">
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="earning-stat">
+            <div class="e-stat">
+                <h1>Rs.7000</h1>
+                <p>All time</p>
+            </div>
+            <div class="e-stat">
+                <h1>Rs. 30</h1>
+                <p>Today</p>
+            </div>
+            <div class="e-stat">
+                <h1>Rs. 200</h1>
+                <p>Yesterday</p>
+            </div>
+            <div class="e-stat">
+                <h1>Rs. 5000</h1>
+                <p>This month</p>
+            </div>
+            <div class="e-stat">
+                <h1>Rs. 3000</h1>
+                <p>Last month</p>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+//newItem counts
+require('electron').ipcRenderer.on('newItemsCount', (event, message) => {
+    console.log(message[0].ct);      
+
+        document.getElementById('nwitm').innerHTML = message[0].ct;
+
+    })
+
+
+
+
+    	var lineChartData = {
+			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov','Dec' ],
+			datasets: [{
+				label: 'Earning Follow',
+				borderColor: window.chartColors.blue,
+				backgroundColor: window.chartColors.blue,
+				fill: false,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor()
+				],
+				yAxisID: 'y-axis-2'
+			}]
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myLine = Chart.Line(ctx, {
+				data: lineChartData,
+				options: {
+					responsive: true,
+					hoverMode: 'index',
+					stacked: false,
+					title: {
+						display: true,
+					},
+					scales: {
+						yAxes: [{
+							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							display: true,
+							position: 'left',
+							id: 'y-axis-1',
+						}, {
+							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							display: true,
+							position: 'right',
+							id: 'y-axis-2',
+
+							// grid line settings
+							gridLines: {
+								drawOnChartArea: false, // only want the grid lines for one axis to show up
+							},
+						}],
+					}
+				}
+			});
+		};
+
+
+</script>
+</body>
+</html>
