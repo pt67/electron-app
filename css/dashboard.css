@@ -1,0 +1,132 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.wrapper{
+    display: flex;
+}
+
+.active{
+    color:gray;
+}
+
+aside #d_title{
+    color:#fff;
+    margin-bottom:2em;
+}
+
+aside{
+padding:3%;
+background:#333;
+width:200px;
+height: 700px;
+position: fixed;
+top:0;
+left:0;
+bottom:0;
+}
+
+aside a{
+    display: block;
+    padding:10px;
+    color:#fff;
+    text-decoration: none;
+}
+aside a:hover{
+    color:gray;
+}
+
+main{
+    padding:5%;
+    margin-left:180px;
+    overflow-x:hidden;
+}
+
+
+/* ========================  Dashboard states  */
+
+.stat-boxes{
+    display:flex;
+    padding:5% 0%;
+    justify-content:space-between;
+}
+
+.stat-boxes .st-box{
+  padding:10px;
+  height:220px;
+  width:220px;
+  background:rgb(54, 162, 235);  
+  text-align:center;
+  padding-top:10%;
+  margin-right:10px;
+  color:#fff;
+}
+
+
+/* =============================== Earning status */
+
+.earning-stat{
+    display:flex;
+    padding:5% 0%;
+    justify-content:space-between;
+}
+.earning-stat .e-stat{
+    padding-top:10%;
+}
+
+
+
+
+/* ===========================================  New Item */
+
+form{
+    display:flex;
+    padding-top:10%;
+    justify-content: space-between;
+}
+
+form .item-field{
+    display:flex;
+    flex-direction:column;
+
+}
+
+form input{
+    padding:10px;
+    margin-right:10px;
+}
+
+form input[type="submit"]{
+    background: rgb(54, 162, 235);  
+    color:#fff;
+    cursor:pointer;
+    border:1px solid rgb(54, 162, 235);
+    font-weight: bold;
+}
+
+#item-submit:disabled{
+background:gray;
+}
+
+
+table tr td{
+    padding:10px 10px 10px 0px;
+    text-align: left;
+    background:rgb(54, 162, 235); 
+}
+
+
+/* ====================================== Item section */
+
+.item-section{
+    padding-top:10%;
+    
+}
+
+
+.item-section ul li{
+    padding:10px 0px;
+    list-style: none;
+}

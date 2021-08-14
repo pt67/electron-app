@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mero Hisab | Sold-Items</title>
+    <link rel="stylesheet" href="css/dashboard.css"/>
+</head>
+<body>
+    <div class="wrapper">
+    <aside>
+        <h1 id="d_title">Dashboard</h1>
+            <a href="dashboard.html">Statistic</a>
+            <a href="newitem.html">New Items</a>
+            <a href="sold.html">Sold Items</a>
+            <a href="stock.html">Stocks</a>
+            <a href="#" class="active">Buyers</a>
+    </aside>
+    <main>
+        <h1>Buyers</h1>
+        <p>Buyres informations are given on the following table.</p><br><br>
+        <table>
+                <th>
+                  <tr>
+                      <td>Name*</td>
+                      <td>Email</td>
+                      <td>Phone*</td>
+                      <td>Note</td>
+                      <td>Products</td>
+                      <td>Action</td>
+                  </tr>
+                </th>
+                <tbody>
+                    <form>
+                    <tr>
+                        <td><input type="text" placeholder="Name" id="pname" autofocus></td>
+                        <td><input type="email" placeholder="Email" id="pemail"></td>
+                        <td><input type="text" placeholder="Phone" id="pphone"></td>
+                        <td><textarea placeholder="Write Note" id="pnote"></textarea></td>
+                        <td>
+                        <select id="items">
+                            
+                        </select>
+                        </td>
+                        <td><input type="submit" value="Add" name="add" id="item-add"></td>
+                    </tr>
+                    </form>
+                </tbody>
+        </table>
+
+    </main>
+</div>
+
+<script>
+document.querySelector('#item-add').addEventListener('click', function() {
+    //e.preventDefault();
+    let pnm = document.querySelector("#pname");
+    let pem = document.querySelector("#pemail");
+    let pph = document.querySelector("#pphone");
+    let pnot = document.querySelector("#pnote");
+    let sitem = document.querySelector("#items");
+
+    let sellitemdata = {
+         personname:pnm.value,
+         personemail:pem.value,
+         personphone:pph.value,
+         personnote:pnot.value,
+         selectedItem:sitem.value 
+    }
+    
+console.log(sellitemdata);
+
+// In renderer process (web page).
+const ipcRenderer = require('electron').ipcRenderer;
+ipcRenderer.sendSync('sell-items', sellitemdata); // prints "pong"   
+});
+
+
+//Making data for options
+    require('electron').ipcRenderer.on('newItems', (event, message) => {
+      for(var i=0; i<message.length; i++){
+          
+          document.getElementById('items').innerHTML += "<option>"+ message[i].name +"</option>";
+      }
+
+    })
+
+    
+</script>
+</body>
+</html>
+
+<!--
+
+
+CREATE TABLE soldProduct(
+id INT(11) AUTO_INCREMENT PRIMARY KEY,
+person_name VARCHAR(250) NOT NULL,
+person_email VARCHAR(250) NOT NULL,
+person_phone VARCHAR(250) NOT NULL,
+note TEXT,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
+-->

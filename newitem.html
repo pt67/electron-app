@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mero Hisab | Sold-Items</title>
+    <link rel="stylesheet" href="css/dashboard.css"/>
+</head>
+<body>
+    <div class="wrapper">
+    <aside>
+        <h1 id="d_title">Dashboard</h1>
+            <a href="dashboard.html">Statistic</a>
+            <a href="newitem.html" class="active">New Items</a>
+            <a href="sold.html">Sold Items</a>
+            <a href="stock.html">Stocks</a>
+            <a href="buyers.html">Buyers</a>
+    </aside>
+    <main>
+        <h1>New items</h1>
+        <form id="create-item">
+            <div class="item-field">
+                <label>Item Name</label>
+                <input type="text" placeholder="Eg. Apple" id="item-name" autofocus>
+            </div>
+            <div class="item-field">
+                <label>Price Rate(Rs./kg/gm/dz)</label>
+                <input type="text"  placeholder="Eg. Rs.150/kg" id="price-rate">
+            </div>
+            <div class="item-field">
+                <label>Final Price(Rs.)</label>
+                <input type="text" placeholder="Eg. Rs.160" id="item-price">
+            </div>
+            <div class="item-field">
+                <label>&nbsp</label>
+                <input type="submit" value="Add to List" id="item-submit">
+            </div>
+        </form>
+        <div class="item-section">
+            <h3>List of items</h3>
+            <table>
+                <th>
+                    <tr>
+                      <td>Name</td>
+                      <td>Rate</td>
+                      <td>Price</td>
+                    </tr>
+                </th>
+                <tbody id="item-lists">
+                    
+                </tbody>
+            </table>
+        </div>
+
+       
+    </main>
+</div>
+
+<script>
+
+
+
+//Enable disable button    
+document.getElementById('item-submit').disabled = true;
+
+document.getElementById('item-name').onchange = function(){
+    document.getElementById('item-submit').disabled = false;
+    if(document.getElementById('item-name').value ===""){
+        document.getElementById('item-submit').disabled = true;
+}
+}
+
+
+document.querySelector('#item-submit').addEventListener('click', function() {
+    let itn = document.querySelector("#item-name");
+    let prr = document.querySelector("#price-rate");
+    let ipr = document.querySelector("#item-price");
+
+    let itemdata = {
+         itemname:itn.value,
+         pricerate:prr.value,
+         itemprice:ipr.value
+    }
+    
+// In renderer process (web page).
+const ipcRenderer = require('electron').ipcRenderer;
+ipcRenderer.sendSync('create-items', itemdata); // prints "pong"   
+});
+
+//Rendering data from mysql table.
+
+require('electron').ipcRenderer.on('newItems', (event, message) => {
+     // console.log(message) // Prints 'whoooooooh!'
+
+      for(var i=0; i<message.length; i++){
+          
+          document.getElementById('item-lists').innerHTML += "<tr><td>"+ message[i].name +"</td>"+ "<td>Rs."+ message[i].rate + "</td>" + "<td>Rs."+ message[i].price + "</td></tr>";
+      }
+
+    })
+
+</script>
+</body>
+</html>
